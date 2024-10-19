@@ -1,10 +1,44 @@
-<html>
-    <head></head>
-    <body>
-        <form action="/submit" method="post">
-            <input type="text" name="username"/>
-            <input type="password" name="password"/>
-            <input type="submit" value="submit"/>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page </title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+
+<body>
+    <div class="login-container">
+        <form  id="login-form" class="login-form" action="/submit" method="post">
+            <h2>Login</h2>
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <input type="submit" class="login-button" value="submit">
         </form>
-    </body>
+    </div>
+    <script>
+        // This script captures the response and shows an alert
+        document.getElementById('login-form').onsubmit = async function(event) {
+            event.preventDefault(); // Prevent form from submitting normally
+            const form = event.target;
+            const formData = new FormData(form);
+
+            const response = await fetch(form.action, {
+                method: form.method,
+                body: formData,
+            });
+
+            const result = await response.text(); // Get the response text from Flask
+            alert(result); // Show it as an alert
+        }
+    </script>
+</body>
+
 </html>
